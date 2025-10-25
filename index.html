@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TURGUTBAMZİYETER ARTIK</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+      background: radial-gradient(circle at center, #0a0a0f, #000);
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      color: #ff0055;
+      cursor: crosshair;
+    }
+
+    .text {
+      position: absolute;
+      font-size: 2rem;
+      font-weight: bold;
+      color: hsl(var(--hue), 100%, 60%);
+      text-shadow: 0 0 10px hsl(var(--hue), 100%, 70%);
+      user-select: none;
+      pointer-events: none;
+      transform: rotate(var(--rot));
+      opacity: 0;
+      animation: pop 2s ease-out forwards;
+    }
+
+    @keyframes pop {
+      0% { transform: scale(0) rotate(var(--rot)); opacity: 1; }
+      100% { transform: scale(2) rotate(calc(var(--rot) + 720deg)); opacity: 0; }
+    }
+
+    h1 {
+      position: absolute;
+      width: 100%;
+      top: 40%;
+      text-align: center;
+      font-size: 3rem;
+      color: #ff0044;
+      text-shadow: 0 0 20px #ff0066;
+      animation: flicker 0.1s infinite alternate;
+    }
+
+    @keyframes flicker {
+      from { opacity: 1; }
+      to { opacity: 0.8; }
+    }
+  </style>
+</head>
+<body>
+  <h1>TURGUTBAMZİYETER ARTIK</h1>
+  <script>
+    function spawnText(x, y) {
+      const t = document.createElement("div");
+      t.className = "text";
+      t.textContent = "TURGUTBAMZİYETER ARTIK";
+      t.style.left = `${x}px`;
+      t.style.top = `${y}px`;
+      t.style.setProperty("--hue", Math.floor(Math.random() * 360));
+      t.style.setProperty("--rot", `${Math.random() * 360}deg`);
+      document.body.appendChild(t);
+      setTimeout(() => t.remove(), 2000);
+    }
+
+    document.addEventListener("mousemove", e => {
+      if (Math.random() < 0.1)
+        spawnText(e.pageX, e.pageY);
+    });
+
+    document.addEventListener("click", e => {
+      for (let i = 0; i < 10; i++) {
+        setTimeout(() => {
+          spawnText(
+            e.pageX + Math.random() * 100 - 50,
+            e.pageY + Math.random() * 100 - 50
+          );
+        }, i * 100);
+      }
+    });
+
+    setInterval(() => {
+      spawnText(Math.random() * window.innerWidth, Math.random() * window.innerHeight);
+    }, 500);
+  </script>
+</body>
+</html>
